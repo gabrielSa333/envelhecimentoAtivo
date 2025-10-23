@@ -8,6 +8,7 @@ class DicBase:
         self.df = pd.read_csv(path)
         self.colspecs = []
         self.names = []
+        self.code_maps = {}
         self._process_dic()
 
     def _process_dic(self):
@@ -25,6 +26,15 @@ class DicBase:
         self.colspecs = list(zip(dic_vars['start0'].astype(int), dic_vars['end0'].astype(int)))
         self.names = dic_vars['var'].tolist()
         self.dic_vars = dic_vars
+
+        self.df['Tipo categoria'] = self.df['Tipo categoria'].astype('string')
+        self.df['Descrição categoria'] = self.df['Descrição categoria'].astype('string')
+
+        for var, g in self.df.groupby('Código da variável'):
+            if not g.empty:
+                codigos = g['Tipo categoria'].astype(str).str.strip()
+                descricoes = g['Descrição categoria'].astype(str).str.strip()
+                self.code_maps[var] = dict(zip(codigos, descricoes))
 
     def get_vars_by_module(self, *modulos: Modulo):
         """Retorna as variáveis do dicionário de um determinado módulo.

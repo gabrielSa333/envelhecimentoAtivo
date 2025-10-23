@@ -25,6 +25,8 @@ if __name__ == "__main__":
                                       colspecs=dic.colspecs, names=dic.names,
                                       dtype=str, encoding="utf-8",
                                       chunksize=50_000)):
+        print(f"- Chunk: {i}")
         chunk.to_parquet(f"out_parquet/part-{i:04d}.parquet",
                         engine="pyarrow", compression="snappy", index=False)
-    print("Fim leitura dos dados.")
+        print(f"- Fim chunk: {i}")
+    print("Fim da persistência de dados.")
