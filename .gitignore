@@ -2,3 +2,4 @@
 *.xls
 PNS_2019.txt
 *.parquet
+*.pyc
