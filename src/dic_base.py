@@ -37,7 +37,7 @@ class DicBase:
                 self.code_maps[var] = dict(zip(codigos, descricoes))
 
     def get_vars_by_module(self, *modulos: Modulo):
-        """Retorna as variáveis do dicionário de um determinado módulo.
+        """Retorna as variáveis do dicionário de um determinado módulo. Pode ser utilizado para extrair colunas específicas do dataframe
 
         Args:
             *modulos (Modulo): Um ou mais módulos do Enum Modulo.
@@ -60,3 +60,31 @@ class DicBase:
         regex = "^(" + "|".join(prefixos) + ")"
         mask = self.dic_vars["var"].str.match(regex)
         return self.dic_vars.loc[mask, "var"].tolist()
+    
+    def describe_var(self, codigo: str):
+        """Exibe informações descritivas da variável
+
+        Args:
+            codigo (str): Código da variável. (ex: 'V0001', 'V0024', 'C008')
+        """
+
+        if codigo not in self.df['Código da variável'].unique():
+            print(f"Variável '{codigo}' não encontrada no dicionário.")
+            return
+        
+        var_info = self.df[self.df['Código da variável'] == codigo]
+        descricao = var_info['Descrição quesito'].dropna().unique()
+        descricao = descricao[0].strip() if len(descricao) > 0 else "(sem descrição)"
+
+        print(f"\n {codigo} — {descricao}")
+        g = var_info[['Tipo categoria', 'Descrição categoria']].dropna(how='all')
+        if not g.empty:
+            print("Valores possíveis:")
+            for _, row in g.iterrows():
+                tipo = str(row['Tipo categoria']).strip()
+                desc = str(row['Descrição categoria']).strip()
+                if tipo == "nan" or desc == "nan":
+                    continue
+                print(f"  {tipo:>3} → {desc}")
+        else:
+            print("(sem categorias associadas)")
