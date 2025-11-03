@@ -247,14 +247,14 @@ O notebook inclui validações automáticas:
 ## Contato e Citação
 
 **Autor**: Gabriel Braga (gaab-braga)
-**Repositório**: https://github.com/gaab-braga/researchEnvelhecimentoAtivo
+**Repositório**: ....
 **Data**: Outubro 2025
-**Licença**: MIT
+**Licença**:
 
 **Como citar**:
 ```
 Braga, G. (2025). Índice Brasileiro de Envelhecimento Ativo (AAI-BR): Análise da PNS 2019.
-GitHub repository: https://github.com/gaab-braga/researchEnvelhecimentoAtivo
+GitHub repository:...
 ```
 
 ---
